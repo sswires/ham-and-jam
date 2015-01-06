@@ -1,0 +1,47 @@
+
+// haj_deployablepickup.cpp
+
+/////////////////////////////////////////////////////////////////////////////
+// includes
+#include "cbase.h"
+#include "haj_deployablepickup.h"
+
+// memdbgon must be the last include file in a .cpp file!!!
+#include "tier0/memdbgon.h"
+
+/////////////////////////////////////////////////////////////////////////////
+LINK_ENTITY_TO_CLASS(haj_deployablepickup, CHajDeployablePickup);
+
+/////////////////////////////////////////////////////////////////////////////
+// data description
+BEGIN_DATADESC(CHajDeployablePickup)
+	DEFINE_KEYFIELD(m_deployTime,     FIELD_FLOAT,  "DeployTime"),
+END_DATADESC()
+
+/////////////////////////////////////////////////////////////////////////////
+CHajDeployablePickup::CHajDeployablePickup()
+{
+	m_timeleft = m_deployTime = 5.0f;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CHajDeployablePickup::Activate()
+{
+	BaseClass::Activate();
+
+	// init timer
+	ResetTimer();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CHajDeployablePickup::ResetTimer()
+{
+	m_timeleft = m_deployTime;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void CHajDeployablePickup::UpdateDeployment(float dt)
+{
+	m_timeleft -= dt;
+	m_timeleft = clamp(m_timeleft, 0.0f, m_deployTime);
+}
