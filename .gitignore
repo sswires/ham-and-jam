@@ -26,3 +26,8 @@
 *.exe
 *.out
 *.app
+
+#Static lib exceptions
+!lib/*/*.lib
+!lib-vc7/*/*.lib
+!linux_sdk/*.a
